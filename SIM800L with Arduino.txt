@@ -88,15 +88,14 @@ void ReceiveMode(){       //Set the SIM800L Receive mode
 void Send_Data()
 {
   Serial.println("Sending Data...");     //Displays on the serial monitor...Optional
-  sim800l.print("AT+CMGF=1\r");          //Set the module to SMS mode
-  delay(100);
-  sim800l.print("AT+CMGS=\"+905380568679\"\r");  //Your phone number don't forget to include your country code example +212xxxxxxxxx"
-  delay(500);  
-  sim800l.print(Data_SMS + " Geri gonderildi");  //This string is sent as SMS
-  delay(500);
-  sim800l.print((char)26);//Required to tell the module that it can send the SMS
-  delay(500);
-  sim800l.println();
-  Serial.println("Data Sent.");
-  delay(500);
+  sim800l.println("AT"); //Once the handshake test is successful, it will back to OK
+  Serialcom();
+
+  sim800l.println("AT+CMGF=1"); // Configuring TEXT mode
+  Serialcom();
+  sim800l.println("AT+CMGS=\"+905305248133\"");//change ZZ with country code and xxxxxxxxxxx with phone number to sms
+  Serialcom();
+  sim800l.print("Last Minute Engineers | lastminuteengineers.com"); //text content
+  Serialcom();
+  sim800l.write(26);
 }
